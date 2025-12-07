@@ -1,0 +1,38 @@
+{
+  "name": "back-end",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "test": "vitest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^5.0.6",
+    "@types/node": "^24.10.1",
+    "@types/nodemailer": "^7.0.4",
+    "@types/pg": "^8.15.6",
+    "joi-to-typescript": "^4.15.0",
+    "prisma": "^7.1.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.1.0",
+    "@prisma/client": "^7.1.0",
+    "bcryptjs": "^3.0.3",
+    "dayjs": "^1.11.19",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "joi": "^17.13.3",
+    "nodemailer": "^7.0.11",
+    "pg": "^8.16.3",
+    "redis": "^5.10.0"
+  }
+}
