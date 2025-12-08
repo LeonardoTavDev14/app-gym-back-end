@@ -31,6 +31,7 @@ export class CreateUserRequestUseCase {
       key: `user_pending_${userToken}`,
       expiration: 900,
       values: {
+        name: data.name.toUpperCase(),
         email: data.email.toLowerCase(),
         token: userToken,
       },
@@ -40,9 +41,11 @@ export class CreateUserRequestUseCase {
 
     await this.nodemailerProvider.sendMail({
       email: data.email.toLowerCase(),
-      content:
-        this.confirmAccountUserTEMPLATE.confirmUserAccount(linkConfirmation),
-      subject: "Confirmar cadastro",
+      content: this.confirmAccountUserTEMPLATE.confirmUserAccount(
+        data.name.toUpperCase(),
+        linkConfirmation
+      ),
+      subject: "CONFIRMAR CADASTRO",
     });
   }
 }

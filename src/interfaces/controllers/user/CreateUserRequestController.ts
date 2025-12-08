@@ -12,7 +12,7 @@ import { UserAlreadyExistsError } from "../../../shared/errors/user/UserAlreadyE
 
 export class CreateUserRequestController {
   async handle(request: Request, response: Response) {
-    const { email } = request.body;
+    const { name, email } = request.body;
 
     const findUserByEmailRepository = new FindUserByEmailRepository();
     const generateCryptoToken = new GenerateCryptoToken();
@@ -29,7 +29,7 @@ export class CreateUserRequestController {
     );
 
     try {
-      const newEmail = await useCase.execute({ email });
+      const newEmail = await useCase.execute({ name, email });
 
       return response.status(200).json({
         message: "Enviamos um e-mail para confirmar o seu cadastro!",

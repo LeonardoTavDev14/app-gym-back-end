@@ -1,3 +1,3 @@
 export interface IConfirmUserAccountTEMPLATE {
-  confirmUserAccount(linkConfirmation: string): string;
+  confirmUserAccount(name: string, linkConfirmation: string): string;
 }

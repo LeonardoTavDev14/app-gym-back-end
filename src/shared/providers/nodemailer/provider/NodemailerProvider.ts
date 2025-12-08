@@ -10,8 +10,10 @@ dotenv.config();
 
 export class NodemailerProvider implements INodemailerProvider {
   linkConfirmationAccount: string;
+  linkPlataform: string;
   constructor() {
     this.linkConfirmationAccount = `${process.env.FRONTEND}/auth/user/cadastrar`;
+    this.linkPlataform = `${process.env.FRONTEND}`
   }
   async sendMail(mailParameters: INodemailerRequest): Promise<void> {
     const mailOptions = {

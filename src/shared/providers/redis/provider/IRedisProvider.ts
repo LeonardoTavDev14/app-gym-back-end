@@ -2,6 +2,7 @@ export interface IRedisParameters {
   key: string;
   expiration: number;
   values: {
+    name?: string;
     email?: string;
     token?: string;
   };

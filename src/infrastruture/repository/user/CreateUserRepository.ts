@@ -10,6 +10,7 @@ export class CreateUserRepository implements ICreateUserRepositories {
         email: user.email,
         password: user.password,
         role: user.role,
+        age: user.age,
       },
     });
 
@@ -18,6 +19,7 @@ export class CreateUserRepository implements ICreateUserRepositories {
       newUser.email,
       newUser.password,
       newUser.role,
+      newUser.age,
       newUser.id
     );
   }

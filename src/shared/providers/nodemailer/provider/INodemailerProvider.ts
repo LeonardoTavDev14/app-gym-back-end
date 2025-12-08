@@ -7,4 +7,5 @@ export interface INodemailerRequest {
 export interface INodemailerProvider {
   sendMail(mailParameters: INodemailerRequest): Promise<void>;
   linkConfirmationAccount: string;
+  linkPlataform: string;
 }

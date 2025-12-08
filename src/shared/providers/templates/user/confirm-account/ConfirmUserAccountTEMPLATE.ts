@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 const yearNow = dayjs().year();
 
 export class ConfirmUserAccountTEMPLATE implements IConfirmUserAccountTEMPLATE {
-  confirmUserAccount(linkConfirmation: string): string {
+  confirmUserAccount(name: string, linkConfirmation: string): string {
     return `<!DOCTYPE html>
 <html lang="pt-BR">
   <head>
@@ -20,7 +20,6 @@ export class ConfirmUserAccountTEMPLATE implements IConfirmUserAccountTEMPLATE {
 
           <table width="600" cellpadding="0" cellspacing="0" style="background-color:#ffffff; border-radius:8px; padding:20px; font-family:'Poppins', Arial, sans-serif;">
 
-            <!-- Header -->
             <tr>
               <td align="center" style="padding:20px 0; font-family:'Poppins', Arial, sans-serif;">
                 <h2 style="margin:0; color:#333333; font-size:24px; font-family:'Poppins', Arial, sans-serif;">
@@ -29,11 +28,10 @@ export class ConfirmUserAccountTEMPLATE implements IConfirmUserAccountTEMPLATE {
               </td>
             </tr>
 
-            <!-- Body -->
             <tr>
               <td style="color:#555555; font-size:16px; line-height:24px; padding:0 20px 20px 20px; font-family:'Poppins', Arial, sans-serif;">
                 <p style="margin:0 0 16px 0; font-family:'Poppins', Arial, sans-serif;">
-                  Olá,
+                  Olá, ${name}
                 </p>
                 <p style="margin:0 0 16px 0; font-family:'Poppins', Arial, sans-serif;">
                   Obrigado por se cadastrar em nossa plataforma. Antes de prosseguir, precisamos confirmar que este e-mail realmente pertence a você.
@@ -44,7 +42,6 @@ export class ConfirmUserAccountTEMPLATE implements IConfirmUserAccountTEMPLATE {
               </td>
             </tr>
 
-            <!-- Button -->
             <tr>
               <td align="center" style="padding:10px 20px 30px 20px; font-family:'Poppins', Arial, sans-serif;">
                 <a href="${linkConfirmation}"
