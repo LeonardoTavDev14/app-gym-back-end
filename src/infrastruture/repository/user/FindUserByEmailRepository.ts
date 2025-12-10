@@ -12,6 +12,13 @@ export class FindUserByEmailRepository implements IFindUserByEmailRepositories {
       return null;
     }
 
-    return new User(user.name, user.email, user.password, user.role, user.id);
+    return new User(
+      user.name,
+      user.email,
+      user.password,
+      user.role,
+      user.age,
+      user.id
+    );
   }
 }
