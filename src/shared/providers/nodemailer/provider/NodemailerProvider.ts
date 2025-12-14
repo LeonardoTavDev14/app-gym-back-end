@@ -12,8 +12,8 @@ export class NodemailerProvider implements INodemailerProvider {
   linkConfirmationAccount: string;
   linkPlataform: string;
   constructor() {
-    this.linkConfirmationAccount = `${process.env.FRONTEND}/auth/user/cadastrar`;
-    this.linkPlataform = `${process.env.FRONTEND}`
+    this.linkConfirmationAccount = `${process.env.FRONTEND_URL}/register`;
+    this.linkPlataform = `${process.env.FRONTEND_URL}/login`
   }
   async sendMail(mailParameters: INodemailerRequest): Promise<void> {
     const mailOptions = {

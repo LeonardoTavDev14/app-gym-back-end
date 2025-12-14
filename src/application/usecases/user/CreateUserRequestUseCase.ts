@@ -37,7 +37,7 @@ export class CreateUserRequestUseCase {
       },
     });
 
-    const linkConfirmation = `${this.nodemailerProvider.linkConfirmationAccount}/${userToken}`;
+    const linkConfirmation = `${this.nodemailerProvider.linkConfirmationAccount}?token=${userToken}`;
 
     await this.nodemailerProvider.sendMail({
       email: data.email.toLowerCase(),
