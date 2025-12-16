@@ -18,6 +18,9 @@ export class FindUserByEmailRepository implements IFindUserByEmailRepositories {
       user.password,
       user.role,
       user.age,
+      user.timeoutAccount,
+      user.loginAttempts,
+      user.accountBlocked!,
       user.id
     );
   }

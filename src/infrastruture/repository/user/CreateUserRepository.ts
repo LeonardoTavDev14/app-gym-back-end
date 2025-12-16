@@ -11,6 +11,9 @@ export class CreateUserRepository implements ICreateUserRepositories {
         password: user.password,
         role: user.role,
         age: user.age,
+        timeoutAccount: null,
+        loginAttempts: 0,
+        accountBlocked: false,
       },
     });
 
@@ -20,6 +23,9 @@ export class CreateUserRepository implements ICreateUserRepositories {
       newUser.password,
       newUser.role,
       newUser.age,
+      newUser.timeoutAccount,
+      newUser.loginAttempts,
+      newUser.accountBlocked!,
       newUser.id
     );
   }
