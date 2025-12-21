@@ -6,16 +6,16 @@ export class UpdateUserRepository implements IUpdateUserRepositories {
   async updateUser(user: User): Promise<void> {
     await prisma.user.update({
       where: {
-        id: user.id!,
+        id: user.id,
       },
-
       data: {
-        name: user.name!,
-        password: user.password!,
-        age: user.age!,
-        timeoutAccount: user.timeoutAccount!,
-        loginAttempts: user.loginAttempts!,
-        accountBlocked: user.accountBlocked!,
+        name: user.name,
+        password: user.password,
+        role: user.role,
+        age: user.age,
+        timeoutAccount: user.timeoutAccount,
+        loginAttempts: user.loginAttempts,
+        accountBlocked: user.accountBlocked,
       },
     });
   }

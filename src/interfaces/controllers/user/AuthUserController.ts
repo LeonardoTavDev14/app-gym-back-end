@@ -9,6 +9,8 @@ import { AuthUserUseCase } from "../../../application/usecases/user/AuthUserUseC
 import { CredencialsUserError } from "../../../shared/errors/user/CredencialsUserError";
 import { UserAccountBlockedError } from "../../../shared/errors/user/UserAccountBlockedError";
 import { UserTimeoutAccountError } from "../../../shared/errors/user/UserTimeoutAccountError";
+import { DeleteManyRefreshTokenRepository } from "../../../infrastruture/repository/refresh-token/DeleteManyRefreshTokenRepository";
+import { CreateRefreshTokenRepository } from "../../../infrastruture/repository/refresh-token/CreateRefreshTokenRepository";
 
 export class AuthUserController {
   async handle(request: Request, response: Response) {
@@ -19,6 +21,9 @@ export class AuthUserController {
     const compareProvider = new CompareProvider();
     const dayJsProvider = new DayJsProvider();
     const updateUserRepository = new UpdateUserRepository();
+    const deleteManyRefreshTokenRepository =
+      new DeleteManyRefreshTokenRepository();
+    const createRefreshTokenRepository = new CreateRefreshTokenRepository();
     const jwtProvider = new JWTProvider();
 
     const useCase = new AuthUserUseCase(
@@ -27,11 +32,24 @@ export class AuthUserController {
       compareProvider,
       dayJsProvider,
       updateUserRepository,
+      deleteManyRefreshTokenRepository,
+      createRefreshTokenRepository,
       jwtProvider
     );
 
     try {
       const user = await useCase.execute({ email, password });
+
+      const { accessToken, refreshToken } = user;
+
+      const cookieOptions: any = {
+        httpOnly: false,
+        secure: false,
+        sameSite: "lax",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      };
+
+      response.cookie("refreshToken", refreshToken, cookieOptions);
 
       return response.status(200).json({
         user: {
@@ -39,7 +57,7 @@ export class AuthUserController {
           name: user.name,
           email: user.email,
         },
-        token: user.accessToken,
+        token: accessToken,
       });
     } catch (err: any) {
       if (err instanceof CredencialsUserError) {

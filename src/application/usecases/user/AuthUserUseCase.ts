@@ -10,6 +10,9 @@ import { IDayJsProvider } from "../../../shared/providers/dayjs/IDayJsProvider";
 import { User } from "../../../domain/entities/User";
 import { IUpdateUserRepositories } from "../../../domain/repositories/user/IUpdateUserRepositories";
 import { ITimeoutAccountUserRepositories } from "../../../domain/repositories/user/ITimeoutAccountUserRepositories";
+import { IDeleteManyRefreshTokenRepositories } from "../../../domain/repositories/refresh-token/IDeleteManyRefreshTokenRepositories";
+import { ICreateRefreshTokenRepositories } from "../../../domain/repositories/refresh-token/ICreateRefreshTokenRepositories";
+import { RefreshToken } from "../../../domain/entities/RefreshToken";
 
 export class AuthUserUseCase {
   constructor(
@@ -18,6 +21,8 @@ export class AuthUserUseCase {
     private readonly compareProvider: ICompareProvider,
     private readonly dayJsProvider: IDayJsProvider,
     private readonly updateUserRepository: IUpdateUserRepositories,
+    private readonly deleteManyRefreshTokenRepository: IDeleteManyRefreshTokenRepositories,
+    private readonly createRefreshTokenRepository: ICreateRefreshTokenRepositories,
     private readonly jwtProvider: IJWTProvider
   ) {}
 
@@ -30,12 +35,14 @@ export class AuthUserUseCase {
       throw new CredencialsUserError();
     }
 
-    if (user.accountBlocked !== false) {
+    if (user.accountBlocked === true) {
       throw new UserAccountBlockedError();
     }
 
     const userTimeoutAccount =
       await this.timeoutAccountUserRepository.timeoutAccountUser(user);
+
+    console.log(userTimeoutAccount);
 
     if (userTimeoutAccount) {
       throw new UserTimeoutAccountError();
@@ -80,6 +87,23 @@ export class AuthUserUseCase {
       throw new CredencialsUserError();
     }
 
+    const updatesUser = User.updateUser(user, {
+      loginAttempts: 0,
+    });
+
+    await this.updateUserRepository.updateUser(updatesUser);
+
+    await this.deleteManyRefreshTokenRepository.deleteRefreshToken(
+      user.id as string
+    );
+
+    const newRefreshToken = new RefreshToken(user.role, user.id as string);
+
+    const refreshToken =
+      await this.createRefreshTokenRepository.createRefreshToken(
+        newRefreshToken
+      );
+
     const accessToken = await this.jwtProvider.generateJWT({
       id: user.id as string,
       role: user.role,
@@ -90,6 +114,7 @@ export class AuthUserUseCase {
       email: user.email,
       name: user.name,
       accessToken,
+      refreshToken: refreshToken.id as string,
     };
   }
 }

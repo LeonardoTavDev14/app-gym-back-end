@@ -8,8 +8,11 @@ export class TimeoutAccountUserRepository
   async timeoutAccountUser(user: User): Promise<boolean> {
     if (!user.timeoutAccount) return false;
 
-    const timeoutAccountUser = dayjs().isBefore(user.timeoutAccount);
+    const timeoutAccountUser =
+      user.timeoutAccount instanceof Date
+        ? user.timeoutAccount
+        : new Date(user.timeoutAccount);
 
-    return timeoutAccountUser;
+    return dayjs().isBefore(timeoutAccountUser);
   }
 }

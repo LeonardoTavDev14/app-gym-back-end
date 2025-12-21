@@ -43,16 +43,20 @@ export class User {
 
   static updateUser(existingUser: User, updates: Partial<User>): User {
     return new User(
-      existingUser.name ?? updates.name,
+      updates.name ?? existingUser.name,
       existingUser.email,
-      existingUser.password ?? updates.password,
-      existingUser.role ?? updates.role,
-      existingUser.age ?? updates.age,
+      updates.password ?? existingUser.password,
+      updates.role ?? existingUser.role,
+      updates.age ?? existingUser.age,
       updates.timeoutAccount !== undefined
         ? updates.timeoutAccount
         : existingUser.timeoutAccount,
-      existingUser.loginAttempts ?? updates.loginAttempts,
-      existingUser.accountBlocked ?? updates.accountBlocked,
+      updates.loginAttempts !== undefined
+        ? updates.loginAttempts
+        : existingUser.loginAttempts,
+      updates.accountBlocked !== undefined
+        ? updates.accountBlocked
+        : existingUser.accountBlocked,
       existingUser.id
     );
   }

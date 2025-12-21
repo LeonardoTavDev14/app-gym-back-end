@@ -17,10 +17,24 @@ model User {
   timeoutAccount DateTime?
   loginAttempts  Int?
   accountBlocked Boolean?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+
+  refreshToken RefreshToken[] @relation("user-refreshToken")
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
 
   @@map("Users")
+}
+
+model RefreshToken {
+  id       String    @id @default(uuid())
+  userRole userRoles
+  user     User      @relation("user-refreshToken", fields: [userId], references: [id])
+  userId   String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("RefreshToken")
 }
 
 enum userRoles {

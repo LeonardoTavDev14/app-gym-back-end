@@ -3,4 +3,5 @@ export interface IAuthUserResponseDTO {
   name: string;
   email: string;
   accessToken: string;
+  refreshToken: string;
 }
